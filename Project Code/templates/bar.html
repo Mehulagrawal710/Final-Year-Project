@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Results</title>
+	<script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.4/dist/Chart.min.js"></script>
+</head>
+<body>
+	<center><h1><u>Results</u></h1></center>
+	<br>
+	<center>
+		<canvas id="barchart"></canvas>
+		percentage
+		<br><br><br><br>
+		<form action = "{{baseurl}}reports?csv={{csv}}&graph={{graph}}" method = "POST" enctype = "multipart/form-data">
+			<button style="background-color: blue; border: 0; padding: 10px; border-radius: 5px; font-size: 1em; color: white;" type = "submit" value="Download Result"/>
+				Download Result
+			</button>
+		</form>
+	</center>
+
+	<script type="text/javascript">
+
+		var colors = ['#c93f38', '#a59344', '#7b463b', '#dd3366', '#191970', '#ab7f46', '#225577', '#c0a98e', '#d2d2c0', '#9bafad', '#990066', '#3d1c02', '#ffaabb', '#d1edee', '#d3dde4', '#456789', '#f6ecde', '#ffbcc5', '#bfaf92', '#c93f38', '#a59344', '#7b463b', '#dd3366', '#191970', '#ab7f46', '#225577', '#c0a98e', '#d2d2c0', '#9bafad', '#990066', '#3d1c02', '#ffaabb', '#d1edee', '#d3dde4', '#456789', '#f6ecde', '#ffbcc5', '#bfaf92']
+
+		var ctx = document.getElementById("barchart").getContext("2d");
+
+		var myDoughnutChart = new Chart(ctx, {
+		    type: 'horizontalBar',
+		    data: {
+			    datasets: [
+				    {
+				        data: {{ values | safe }},
+				        backgroundColor: colors.slice(0, {{values}}.length),
+				        label: 'percentage',
+				        barThickness: 'flex'
+				    }
+				],
+			    labels: {{ labels | safe }}
+			}
+		});
+
+	</script>
+
+</body>
+</html>
